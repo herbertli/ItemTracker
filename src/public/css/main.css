@@ -1,0 +1,25 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.link {
+    stroke: #000;
+}
+
+.node text {
+    pointer-events: none;
+    font: 10px sans-serif;
+}
+
+svg {
+    display: block;
+    background-color: white;
+}
+
+.material-icons {
+    vertical-align: middle;
+}
+
+form {
+    padding: 15px;
+}

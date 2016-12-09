@@ -1,0 +1,190 @@
+<!-- Delete Location Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="gridSystemModalLabel">Delete a Location</h4>
+            </div>
+            <form action="/deleteLocation" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" name="locationId" id="locationId" value="{{location._id}}">
+                        Are you sure you want to remove location {{location.title}} (and all of its items)?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default pull-left" type="submit">
+                        Yes!<i class="material-icons">check</i>
+                    </button>
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">
+                        Woah there!<i class="material-icons">cancel</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Item Modal Content -->
+<div id="add-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-modalLabel">
+    <div class="modal-dialog modal-sg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="gridSystemModalLabel">Add an Item</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="itemTitle">Item Title: </label>
+                        <input type="text" id="itemTitle" placeholder="Title" class="form-control"
+                               name="itemTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="itemDesc">Item Description: </label>
+                        <input type="text" id="itemDesc" placeholder="Description" class="form-control"
+                               name="itemDesc">
+                    </div>
+                    <div class="form-group">
+                        <label for="itemQuantity">Item Quantity: </label>
+                        <input type="number" id="itemQuantity" placeholder="Quantity" class="form-control"
+                               name="itemQuantity">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="locationTitle" id="locationTitle" value="{{location.title}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default pull-left" data-dismiss="modal" id="addItem">
+                        Submit<i class="material-icons">chevron_right</i>
+                    </button>
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">
+                        Close<i class="material-icons">cancel</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Items List -->
+<div class="row">
+    <div id="alert-msg" class="col-md-10 col-md-offset-1 ">
+        {{#if message}}
+            <div class="alert alert-danger fade in alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                </button>
+                <strong>Error!</strong> {{message}}
+            </div>
+        {{/if}}
+    </div>
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true"
+                           aria-controls="collapseOne">
+                            <i class="material-icons">home</i>
+                            {{location.title}}
+                        </a>
+                        <!-- Add Item Modal Trigger -->
+                        <a class="pull-right" href="#" data-toggle="modal" data-target="#add-modal">
+                            <i class="material-icons">add</i>
+                        </a>
+                        <!-- Delete Location Modal Trigger -->
+                        <a class="pull-right" href="#" data-toggle="modal" data-target="#delete-modal">
+                            <i class="material-icons">clear</i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <form method="POST" action="/updateLocation" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="locationDesc" class="control-label col-md-2">Description</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="locationDesc" name="locationDesc" value="{{location.description}}">
+                            </div>
+                            <input type="hidden" name="locationId" id="locationId" value="{{location._id}}">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Update Location</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {{#each location.items}}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading{{slug}}">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" href="#collapse{{slug}}"
+                               aria-expanded="false" aria-controls="collapse{{slug}}">
+                                <i class="material-icons">folder</i>{{title}}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse{{slug}}" class="panel-collapse collapse" role="tabpanel"
+                         aria-labelledby="heading{{slug}}">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <form class="form-horizontal" method="POST" action="/updateItem">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for="locationDesc">Description</label>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control" name="itemDesc" id="itemDesc" value="{{description}}">
+                                        </div>
+                                        <input type="hidden" name="locationTitle" id="locationTitle" value="{{../location.title}}">
+                                        <input type="hidden" name="itemId" id="itemId" value="{{_id}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for="itemQuantity">Quantity</label>
+                                        <div class="col-md-3">
+                                            <input type="number" class="form-control col-md-10" name="itemQuantity" id="itemQuantity" value="{{quantity}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default">Update Item</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="list-group-item container-fluid">
+                                <form method="POST" action="/location/{{../location.title}}/moveItem">
+                                    <input type="hidden" name="itemId" value="{{_id}}">
+                                    <div class="col-md-3">
+                                        <select name="moveLocationId" class="form-control">
+                                            {{#each ../user.locations}}
+                                                <option>{{title}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-default pull-right"
+                                            id="moveItem"
+                                            type="submit" name="action">
+                                        Move Item<i class="material-icons">check</i>
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="list-group-item container-fluid">
+                                <form method="POST" action="/location/{{../location.title}}/deleteItem">
+                                    <input type="hidden" name="itemId" value="{{_id}}">
+                                    <button class="btn btn-default pull-right"
+                                            id="deleteItem"
+                                            type="submit" name="action">
+                                        Delete Item<i class="material-icons">close</i>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+<script src="/js/detail.js"></script>

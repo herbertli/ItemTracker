@@ -1,0 +1,27 @@
+<div class="row">
+    <div id="alert-msg" class="col-md-10 col-md-offset-1 ">
+        {{#if message}}
+            <div class="alert alert-danger fade in alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                </button>
+                <strong>Error!</strong> {{message}}
+            </div>
+        {{/if}}
+    </div>
+    <div class="col-md-offset-1 col-md-10">
+        <div class="page-header">
+            <h1><i class="material-icons circle">person</i> {{stats.username}}</h1>
+        </div>
+        <div class="list-group">
+            <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Number of Locations</h4>
+                <p class="list-group-item-text">{{stats.numLocations}}</p>
+            </a>
+            <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Number of Items</h4>
+                <p class="list-group-item-text">{{stats.numItems}}</p>
+            </a>
+        </div>
+    </div>
+</div>

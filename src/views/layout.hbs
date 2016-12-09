@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item Tracker</title>
+
+    <!-- Google Material Design Icons -->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Jquery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Item Tracker</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+
+            {{#if user}}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{user.username}}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/dashboard">Dashboard</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/profile">Profile</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            {{else}}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                </ul>
+            {{/if}}
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container-fluid">
+    {{{body}}}
+</div>
+
+<script src="/js/layout.js"></script>
+
+</body>
+</html>
